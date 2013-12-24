@@ -1,0 +1,84 @@
+@media (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+
+a > span.glyphicon {
+    color: black;
+    margin: 0 3px;
+}
+
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+}
+
+.header a:focus, a:hover {
+    text-decoration: none;
+}
+
+.header .banner {
+    line-height: 40px;
+}
+
+.main {
+    margin: 0 auto;
+    width: 98%;
+}
+
+.main h1 {
+    font-size: 24px;
+}
+
+.main h2 {
+    font-size: 20px;
+}
+
+.main h3 {
+    font-size: 16px;
+}
+
+.main h4 {
+    font-size: 14px;
+}
+
+.main h5 {
+    font-size: 12px;
+}
+
+.main h6 {
+    font-size: 10px;
+}
+
+.form {
+    width: 100%;
+}
+
+.form td {
+    padding: 10px;
+}
+
+.form input[type="text"], input[type="password"], textarea {
+    width: 90%;
+}
+
+.login {
+    width: 60%;
+}
+
+.problem table {
+    width: 100%;
+}
+
+.problem td {
+    padding: 5px;
+}
+
+span.timer {
+    padding-left: 5px;
+}
+
+div.delete {
+    padding: 3px;
+}

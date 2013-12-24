@@ -1,0 +1,25 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>ランキング</h1>
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+        {% for problem in problems %}
+        <th>
+            <a href="{% url 'machine_learning.views.view' problem.id %}">{{ problem.name }}</a>
+        </th>
+        {% endfor %}
+        <th>合計</th>
+    </tr>
+    {% for rank in ranking %}
+    <tr>
+        {% for cell in rank %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

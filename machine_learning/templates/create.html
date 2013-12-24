@@ -1,0 +1,57 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>問題作成</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="form">
+        {% for field in form %}
+        <tr class="{{ field.name }}">
+            <th>{{ field.label }}</th>
+            {% if field.errors %}
+            <td>{{ field.errors }}{{ field }}</td>
+            {% else %}
+            <td>{{ field }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" class="btn btn-primary" value="作成" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    function updateScore() {
+        var count = $('#id_count').val();
+        var type = $('#id_type').val();
+        var threshold = $('#id_threshold').val();
+        var coefficient = $('#id_coefficient').val();
+
+        if(type == 0)
+            $('#id_score').val(count * coefficient);
+        else if(type == 1)
+            $('#id_score').val(count * threshold * coefficient);
+    }
+
+    $('#id_type').change(function() {
+        var type = $('#id_type').val();
+
+        if(type == 0)
+            $('.threshold').hide();
+        else if(type == 1)
+            $('.threshold').show();
+
+        updateScore();
+    });
+
+    $('#id_count').keyup(updateScore);
+    $('#id_threshold').keyup(updateScore);
+    $('#id_coefficient').keyup(updateScore);
+
+    $('#id_type').trigger('change');
+</script>
+{% endblock %}

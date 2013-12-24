@@ -1,0 +1,11 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>Internal Server Error</h1>
+<div class="well">
+    <p>The server encountered an internal error or misconfiguration and was unable to complete your request</p>
+    <hr />
+    <a class="btn btn-primary" href="{% url 'machine_learning.views.index' %}">Return to Top</a>
+</div>
+{% endblock %}

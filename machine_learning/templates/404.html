@@ -1,0 +1,11 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>Page Not Found</h1>
+<div class="well">
+    <p>Requested Path: {{ request_path }}</p>
+    <hr />
+    <a class="btn btn-primary" href="{% url 'machine_learning.views.index' %}">Return to Top</a>
+</div>
+{% endblock %}

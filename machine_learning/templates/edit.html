@@ -1,0 +1,27 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>問題編集: {{ problem.name }}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="form">
+        {% for field in form %}
+        <tr class="{{ field.name }}">
+            <th>{{ field.label }}</th>
+            {% if field.errors %}
+            <td>{{ field.errors }}{{ field }}</td>
+            {% else %}
+            <td>{{ field }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" class="btn btn-primary" value="更新" />
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

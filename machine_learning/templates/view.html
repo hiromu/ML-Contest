@@ -1,0 +1,97 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>{{ problem.name }}</h1>
+{% if error %}
+<div class="alert alert-danger alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ error }}
+</div>
+{% endif %}
+<pre>{{ problem.statement }}</pre>
+<div class="problem">
+    <table>
+        <tr>
+            <td>学習データ</td>
+            <td>
+                <a href="{{ MEDIA_URL }}{{ problem.traindata }}" target="_blank">ダウンロード</a>
+            </td>
+        </tr>
+        <tr>
+            <td>テストデータ</td>
+            <td>
+                <a class="download" href="{% url 'machine_learning.views.download' problem.id %}" target="_blank">ダウンロード</a>
+            </td>
+        </tr>
+    </table>
+    <form method="post" enctype="multipart/form-data" class="submit">
+        <h2>提出<span class="timer pull-right"></span></h2>
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+            <tr>
+                <td>{{ field.label }}</td>
+                {% if field.errors %}
+                <td>{{ field.errors }}{{ field }}</td>
+                {% else %}
+                <td>{{ field }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="提出" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    var request, timer, timeout = null;
+
+    function updateTimer() {
+        var diff = Math.ceil((timeout - new Date()) / 1000);
+        if(diff < 0) {
+            $('.submit').hide('normal');
+
+            timeout = null;
+            clearInterval(timer);
+        } else {
+            var minute = ('0' + Math.floor(diff / 60)).slice(-2);
+            var second = ('0' + diff % 60).slice(-2);
+
+            $('.timer').text('残り時間 ' + minute + ':' + second);
+            if(diff <= 5)
+                $('.timer').css('color', 'red');
+            else
+                $('.timer').css('color', 'black');
+
+            $('.submit').show('normal');
+        }
+    }
+    
+    function startTimer() {
+        if(timeout == null) {
+            $.ajax({
+                url: '{% url 'machine_learning.views.timer' problem.id %}',
+                success: function(msg) {
+                    if(msg) {
+                        timeout = new Date(msg);
+                        timer = setInterval(updateTimer, 1000);
+                    }
+                }
+            });
+        } else {
+            clearInterval(request);
+        }
+    }
+
+    $('.submit').hide();
+    $('.download').click(function() {
+        request = setInterval(startTimer, 500);
+    });
+    startTimer();
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>問題編集: {{ problem.name }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <p>本当に「{{ problem.name }}」を削除してもいいですか？</p>
+    {{ form }}
+    <div class="delete">
+        <input type="submit" class="btn btn-danger" value="削除" />
+        <a href="{% url 'machine_learning.views.index' %}" class="btn btn-primary">戻る</a>
+    </div>
+</form>
+{% endblock %}

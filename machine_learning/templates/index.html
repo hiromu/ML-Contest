@@ -1,0 +1,39 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+{% if user.is_staff %}
+<div class="pull-right">
+    <a href="{% url 'machine_learning.views.create' %}"><span class="glyphicon glyphicon-plus-sign"></span>問題を追加</a>
+</div>
+{% endif %}
+<h1>問題一覧</h1>
+<table class="table">
+    <tr>
+        <th>タイトル</th>
+        <th>スコア</th>
+        <th>最高点</th>
+        {% if user.is_staff %}
+        <th></th>
+        <th></th>
+        {% endif %}
+    </tr>
+    {% for problem in problems %}
+    <tr>
+        <td>
+            <a href="{% url 'machine_learning.views.view' problem.id %}">{{ problem.name }}</a>
+        </td>
+        <td>{{ problem.score }}</td>
+        <td>{{ problem.max }}</td>
+        {% if user.is_staff %}
+        <td>
+            <a href="{% url 'machine_learning.views.edit' problem.id %}">編集</a>
+        </td>
+        <td>
+            <a href="{% url 'machine_learning.views.delete' problem.id %}">削除</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

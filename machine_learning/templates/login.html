@@ -1,0 +1,27 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+{% if form.errors %}
+<div class="alert alert-danger">ログインに失敗しました</div>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <table class="form login">
+        <tr>
+            <th>{{ form.username.label_tag }}</th>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ form.password.label_tag }}</th>
+            <td>{{ form.password }}</td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="submit" class="btn btn-primary" value="ログイン" />
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

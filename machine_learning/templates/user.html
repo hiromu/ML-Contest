@@ -1,0 +1,32 @@
+{% extends 'template.html' %}
+{% load url from future %}
+
+{% block main %}
+<h1>{{ request_user.last_name }} {{ request_user.first_name }}さんの提出一覧</h1>
+<table class="table">
+    <tr>
+        <th>問題</th>
+        <th>スコア</th>
+        <th>回答</th>
+        {% if request_user == user or user.is_staff %}
+        <th>ソースコード</th>
+        {% endif %}
+    </tr>
+    {% for submission in submissions %}
+    <tr>
+        <td>
+            <a href="{% url 'machine_learning.views.view' submission.problem.id %}">{{ submission.problem.name }}</a>
+        </td>
+        <td>{{ submission.score }}</td>
+        <td>
+            <a href="{{ MEDIA_URL }}{{ submission.data }}">ダウンロード</a>
+        </td>
+        {% if request_user == user or user.is_staff %}
+        <td>
+            <a href="{{ MEDIA_URL }}{{ submission.source }}">ダウンロード</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
