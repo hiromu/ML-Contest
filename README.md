@@ -1,4 +1,4 @@
 ML-Contest
 ==========
 
-A contest system of machine learning which is in use at NPCA.
+A contest system for machine learning used in NPCA.
